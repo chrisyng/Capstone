@@ -1,4 +1,12 @@
 #BlueJ class context
 comment0.params=picture
 comment0.target=Compressor(SimplePicture)
-numComments=1
+comment1.params=
+comment1.target=java.lang.String\ getDimensions()
+comment2.params=
+comment2.target=java.lang.String\ compress()
+comment3.params=block
+comment3.target=int[]\ calculateAverageRGB(Pixel[])
+comment4.params=first\ second
+comment4.target=boolean\ checkSameColor(Pixel,\ Pixel)
+numComments=5

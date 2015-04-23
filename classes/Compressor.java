@@ -19,7 +19,7 @@ public class Compressor
     public String compress()
     /**
      * Run the compression algorithm: go row-by-row, find matching pixels with RGB values within 5 of each other, and store it as a String of integers in the order red, green, blue, and length of the block.
-     * @return string with compressed data
+     * @return string with compressed data, in the format R, G, B, length, with spaces as delimiters 
      */
     {
         String compressedData = "";
@@ -29,19 +29,34 @@ public class Compressor
             int numMatching=0; //stores amount of similar pixels in a row
             for (int j=0; j<uncompressedPixels[0].length; j++)
             {
-                previousPixel=uncompressedPixels[i][j-1];
-                if (checkSameColor(previousPixel, uncompressedPixels[i][j]))
+                if (j!=0) //handle exception for being the first element in a row
                 {
-                    numMatching++; // check if the pixels are the "same" and increment the block size
+                    previousPixel=uncompressedPixels[i][j-1];
+                    if (checkSameColor(previousPixel, uncompressedPixels[i][j]))
+                    {
+                        numMatching++; // check if the pixels are the "same" and increment the block size
+                    }
+                    else // calculate the average RGB values and send that to the compressed String of data
+                    {
+                        Pixel[] thisBlock = new Pixel[numMatching];
+                        for (int n=j-numMatching; n<j; n++)
+                        {
+                            thisBlock[n] = uncompressedPixels[i][n];
+                        }
+                        int[] blockColors = calculateAverageRGB(thisBlock);
+                        compressedData += (blockColors[0] + " " + blockColors[1] + " " + blockColors[2] + " " + numMatching);
+                        numMatching = 1; //reset the counter, but include this pixel since it still needs to be scanned
+                    }
                 }
-                else // calculate the average RGB values and send that to the compressed String of data
+                else
                 {
-
+                    numMatching++;
                 }
             }
         }
+        return compressedData;
     }
-    
+
     public int[] calculateAverageRGB(Pixel[] block)
     /**
      * Helper method that finds the average of a given block of RGB values
