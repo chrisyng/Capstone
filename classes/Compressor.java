@@ -1,20 +1,13 @@
+import java.util.Scanner;
 public class Compressor
 {
-    private SimplePicture uncompressed;
-    private Pixel[][] uncompressedPixels;
-    public Compressor(SimplePicture picture)
+    private Picture original;
+    private Pixel[][] uncompressedPixels;    
+    public Compressor(Picture picture)
     {
-        uncompressed = picture;
+        original = picture;
         uncompressedPixels = picture.getPixels2D();
-    }
-
-    public String getDimensions()
-    /**
-     * @return the dimensions of the picture.     
-     */
-    {
-        return uncompressedPixels.length + " " + uncompressedPixels[0].length;
-    }
+    }    
 
     public String compress()
     /**
@@ -55,7 +48,7 @@ public class Compressor
             }
         }
         return compressedData;
-    }
+    }   
 
     public int[] calculateAverageRGB(Pixel[] block)
     /**
@@ -86,8 +79,7 @@ public class Compressor
     {
         if (Math.abs(first.getRed()-second.getRed())< 5 &&
         Math.abs(first.getGreen()-second.getGreen())<5 &&
-        Math.abs(first.getBlue()-second.getBlue())<5
-        )
+        Math.abs(first.getBlue()-second.getBlue())<5)
         {
             return true;
         }

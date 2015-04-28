@@ -1,10 +1,10 @@
 #BlueJ class context
 comment0.params=picture
-comment0.target=Compressor(SimplePicture)
+comment0.target=Compressor(Picture)
 comment1.params=
-comment1.target=java.lang.String\ getDimensions()
+comment1.target=java.lang.String\ compress()
 comment2.params=
-comment2.target=java.lang.String\ compress()
+comment2.target=Picture\ decompress()
 comment3.params=block
 comment3.target=int[]\ calculateAverageRGB(Pixel[])
 comment4.params=first\ second
