@@ -4,10 +4,13 @@ public class Compressor
     private Picture original;
     private Pixel[][] uncompressedPixels;    
     public Compressor(Picture picture)
+    /**
+     * Makes a new compressor object by with a passed in picture object
+     */
     {
         original = picture;
         uncompressedPixels = picture.getPixels2D();
-    }    
+    }
 
     public String compress()
     /**
@@ -19,31 +22,26 @@ public class Compressor
         for (int i=0; i< uncompressedPixels.length; i++)
         {
             Pixel previousPixel;
-            int numMatching=0; //stores amount of similar pixels in a row
-            for (int j=0; j<uncompressedPixels[0].length; j++)
+            int numMatching=1; //stores amount of similar pixels in a row
+            for (int j=1; j<uncompressedPixels[0].length; j++)
             {
-                if (j!=0) //handle exception for being the first element in a row
+                previousPixel=uncompressedPixels[i][j-1];
+                if (checkSameColor(previousPixel, uncompressedPixels[i][j]))
                 {
-                    previousPixel=uncompressedPixels[i][j-1];
-                    if (checkSameColor(previousPixel, uncompressedPixels[i][j]))
-                    {
-                        numMatching++; // check if the pixels are the "same" and increment the block size
-                    }
-                    else // calculate the average RGB values and send that to the compressed String of data
-                    {
-                        Pixel[] thisBlock = new Pixel[numMatching];
-                        for (int n=j-numMatching; n<j; n++)
-                        {
-                            thisBlock[n] = uncompressedPixels[i][n];
-                        }
-                        int[] blockColors = calculateAverageRGB(thisBlock);
-                        compressedData += (blockColors[0] + " " + blockColors[1] + " " + blockColors[2] + " " + numMatching);
-                        numMatching = 1; //reset the counter, but include this pixel since it still needs to be scanned
-                    }
+                    numMatching++; // check if the pixels are the "same" and increment the block size
                 }
-                else
+                else // calculate the average RGB values and send that to the compressed String of data
                 {
-                    numMatching++;
+                    Pixel[] thisBlock = new Pixel[numMatching];
+                    int a = 0;
+                    for (int n=j-numMatching; n<j; n++)
+                    {
+                        thisBlock[a] = uncompressedPixels[i][n];
+                        a++;
+                    }                   
+                    int[] blockColors = calculateAverageRGB(thisBlock);
+                    compressedData += (" " + blockColors[0] + " " + blockColors[1] + " " + blockColors[2] + " " + numMatching + " ");
+                    numMatching = 1; //reset the counter, but include this pixel since it still needs to be scanned
                 }
             }
         }
@@ -77,9 +75,9 @@ public class Compressor
      * @param second second pixel for comparison
      */
     {
-        if (Math.abs(first.getRed()-second.getRed())< 5 &&
-        Math.abs(first.getGreen()-second.getGreen())<5 &&
-        Math.abs(first.getBlue()-second.getBlue())<5)
+        if (Math.abs(first.getRed()-second.getRed()) < 10 &&
+        Math.abs(first.getGreen()-second.getGreen()) < 10 &&
+        Math.abs(first.getBlue()-second.getBlue()) < 10)
         {
             return true;
         }

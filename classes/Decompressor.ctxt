@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=compressed
-comment0.target=Decompressor(java.lang.String)
+comment0.params=compressed\ x\ y
+comment0.target=Decompressor(java.lang.String,\ int,\ int)
 comment1.params=
 comment1.target=Picture\ decompress()
 numComments=2
