@@ -42,8 +42,17 @@ public class Compressor
                     int[] blockColors = calculateAverageRGB(thisBlock);
                     compressedData += (" " + blockColors[0] + " " + blockColors[1] + " " + blockColors[2] + " " + numMatching + " ");
                     numMatching = 1; //reset the counter, but include this pixel since it still needs to be scanned
-                }
+                }                
             }
+            Pixel[] thisBlock = new Pixel[numMatching];
+            int a = 0;
+            for (int n=uncompressedPixels[0].length-numMatching; n<uncompressedPixels[0].length; n++)
+            {
+                thisBlock[a] = uncompressedPixels[i][n];
+                a++;
+            }                   
+            int[] blockColors = calculateAverageRGB(thisBlock);
+            compressedData += (" " + blockColors[0] + " " + blockColors[1] + " " + blockColors[2] + " " + numMatching + " ");            
         }
         return compressedData;
     }   
