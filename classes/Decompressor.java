@@ -5,6 +5,11 @@ public class Decompressor
     private Picture canvas;
     private int x, y; //dimensions of the picture to be decompressed
     public Decompressor(String compressed, int x, int y)
+    /**
+     * Default constructor for objects of class Decompressor.
+     * @param compressed The STring containing the compressed data about the picture.
+     * @param x,y the x and y dimensions of the picutre that needs to be compressed
+     */
     {
         compressedData = compressed;
         this.x=x;
@@ -13,10 +18,13 @@ public class Decompressor
     }
 
     public Picture decompress()
+    /**
+     * Main decompress method returns the decompressed picture from the String data.
+     * @return canvas the uncompressed picture
+     */
     {
         Pixel[][] decompressedPicture = canvas.getPixels2D();
-        Scanner in = new Scanner(compressedData);   
-
+        Scanner in = new Scanner(compressedData);
         for (Pixel[] pixelRow : decompressedPicture)
         {
             int pixelNum = 0;
